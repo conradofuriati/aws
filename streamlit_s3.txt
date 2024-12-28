@@ -1,0 +1,22 @@
+import streamlit as st
+import boto3
+
+# Criar uma conexão com o Amazon S3
+s3 = boto3.client('s3')
+
+# Criar o layout da página com o Streamlit
+st.title('Upload de Arquivo para o Amazon S3')
+st.markdown('Selecione o arquivo que você quer fazer upload:')
+
+# Adicionar um widget para selecionar o arquivo
+arquivo = st.file_uploader('', type=None)
+
+if arquivo is not None:
+    # Obter o nome e o conteúdo do arquivo
+    nome_arquivo = arquivo.name
+    conteudo_arquivo = arquivo.read()
+
+    # Fazer upload do arquivo para o Amazon S3
+    s3.put_object(Bucket='meu-bucket', Key=nome_arquivo, Body=conteudo_arquivo)
+
+    st.markdown('O arquivo foi enviado com sucesso para o Amazon S3!')

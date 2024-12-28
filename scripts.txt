@@ -1,0 +1,32 @@
+
+S3
+SNS
+SQS
+Dynamo
+CloudWatch
+
+Lambda
+ create function
+ invoke function
+
+IAM
+ create role
+ 
+
+ECR
+ create repository
+ put image
+ list images
+
+Batch
+
+EMR
+
+EC2
+
+RDS
+
+ElastiCache
+
+OpenSearch
+
