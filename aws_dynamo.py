@@ -16,7 +16,7 @@ def create_table(name, schema, attributes, provisioned):
     response = dynamodb.create_table(TableName=name, KeySchema=schema, AttributeDefinitions=attributes, ProvisionedThroughput=provisioned)
     return response
 
-name = 'bill-bankslip'
+name = 'table_name'
 schema = [{'AttributeName': 'Id', 'KeyType': 'S'}, {'AttributeName': 'Payload', 'KeyType': 'S'}] #nao podem ser alterados
 attributes = [{'AttributeName': 'Id', 'KeyType': 'S'}, {'AttributeName': 'Payload', 'KeyType': 'S'}]
 provisioned = {'ReadCapacityUnits': 5, 'WriteCapacityUnits': 5}
@@ -30,7 +30,7 @@ def create_item(table, body):
     tbl = dynamodb.Table(table)
     tbl.put_item(Item=body)
 
-table = 'bill-bankslip'
+table = 'table_name'
 body = {'Id': '2', 'Payload': "{'user': '1', 'product': 'tenis', 'amount': '199.50'}"}
 
 create_item(table, body)
@@ -42,7 +42,7 @@ def update_item(table, key, expression, attributes):
     tbl = dynamodb.Table(table)
     tbl.update_item(Key=key, UpdateExpression=expression, ExpressionAttributeValues=attributes)
 
-table = 'bill-bankslip'
+table = 'table_name'
 key = {'Id': '2', 'Payload': "{'user': '1', 'product': 'tenis', 'amount': '199.50'}"}
 expression = 'SET payload = :val'
 attributes = {':val': "{'user': '2', 'origem': 'aliexpress', 'product': 'tenis', 'amount': '299.50'}"}
@@ -56,7 +56,7 @@ def delete_item(table, key):
     tbl = dynamodb.Table(table)
     tbl.delete_item(Key=key)
 
-table = 'bill-bankslip'
+table = 'table_name'
 key = {'Id': '2', 'Payload': "{'user': '2', 'origem': 'aliexpress', 'product': 'tenis', 'amount': '299.50'}"}
 
 delete_item(table, key)
@@ -71,9 +71,9 @@ def query_table(table, index, key, value):
     df = pd.DataFrame(response['Items'])
     return df
 
-table = ''
-index = 'CodigoBarras-index'
-key = 'BarCode'
+table = 'table_name'
+index = 'Column-index'
+key = 'column_name'
 value = '2080000'
 
 df = query_table(table, index, key, value)
@@ -94,9 +94,9 @@ def query_table(table, index, key, value):
         df = pd.DataFrame(response['Items'])
         return df
 
-table = ''
-index = None #'CodigoBarras-index'
-key = 'BarCode'
+table = 'table_name'
+index = None
+key = 'column_name'
 value = '2080000'
 
 df = query_table(table, index, key, value)
@@ -110,10 +110,10 @@ def query_multiple(table, key, value, key2, value2):
     df = pd.DataFrame(response['Items'])
     return df
 
-table = ''
-key = 'BarCode'
+table = 'table_name'
+key = 'column_name1'
 value = '2080000'
-key2 = 'BarCode'
+key2 = 'column_name2'
 value2 = '2080000'
 
 df = query_table(table, key, value, key2, value2)
@@ -127,7 +127,7 @@ def scan_table(table, key, value):
     df = pd.DataFrame(response['Items'])
     return df
 
-table = 'APIPaymentBill-BankslipData'
+table = 'table_name'
 key = 'Status'
 value = 'PROCESSING'
 
@@ -142,7 +142,7 @@ def scan_multiple(table, filters):
     df = pd.DataFrame(response['Items'])
     return df
 
-table = 'bill-bankslip'
+table = 'table_name'
 filters = {'Status': 'ERROR', 'Date': '2021-05-01'}
 #FilterExpression = ' AND '.join(['{0}=:{0}'.format(k) for k, v in filters.items()])
 #ExpressionAttributeValues = {': {}'.format(k): {'S': v} for k, v in filters.items()}
@@ -158,7 +158,7 @@ def scan_multiple2(table, filters, expression_values, expression_names):
     df = pd.DataFrame(response['Items'])
     return df
 
-table = 'APIPaymentBill-BankslipData'
+table = 'table_name'
 filters = '#Status=:st AND contains(Date, :dt)'
 expression_values = {':st': {'S': 'ERROR'}, ':dt': {'S': '2021-12-10'}}
 expression_names = {'#Status': 'Status'}
@@ -174,7 +174,7 @@ def scan_multiple3(table, key, key2, value, value2):
     df = pd.DataFrame(response['Items'])
     return df
 
-table = 'APIPaymentBill-BankslipData'
+table = 'table_name'
 key = 'Status'
 key2 = 'PROCESSING'
 value = 'OperationDate'
@@ -192,7 +192,7 @@ def insert_multiple(table, batch_list):
             batch.put_item(Item=item)
     return {'Status Code': 200, 'Message': 'Registros inseridos com sucesso'}
 
-table = 'bill-bankslip-issue-notification'
+table = 'table_name-issue-notification'
 batch_list = [{'Id': 'asd123', 'Payload': "{'user': 1, 'product': 'ted', 'amount': '100.00'}"}, {'Id': 'asd123', 'Payload': "{'user': 1, 'product': 'ted', 'amount': '100.00'}"}]
 
 insert_multiple(table, batch_list)
