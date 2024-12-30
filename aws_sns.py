@@ -13,7 +13,7 @@ def create_topic(name):
     topic = sns.create_topic(Name=name)
     return topic
 
-create_topic('bill-bankslip')
+create_topic('topic_name')
 
 
 #list topic
@@ -34,7 +34,7 @@ def subscribe(topic, protocol, endpoint):
 
 topic = 'arn:aws:sns:sa-east-1:XXX:nome-topico'
 
-email = 'conrado.dias@btgpactual.com'
+email = 'conrado.dias@gmail.com'
 email_sub = subscribe(topic, 'email', email)
 
 sqs = 'arn:aws:sqs:sa-east-1:XXX:nome-fila'
